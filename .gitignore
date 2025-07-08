@@ -1,0 +1,25 @@
+# Node modules (jangan pernah di-push)
+node_modules/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Environment files
+.env
+.env.local
+
+# VSCode settings (opsional)
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Binaries, coverage reports, test output
+dist/
+build/
+coverage/
