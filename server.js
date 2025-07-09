@@ -29,16 +29,18 @@ mongoose
   });
 
 // Route Utama
+const protect = require("./middlewares/authMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const projectUserRoutes = require("./routes/projectUserRoutes");
-const protect = require("./middlewares/authMiddleware");
+const taskRoutes = require("./routes/taskRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api", protect, userRoutes);
 app.use("/api", protect, projectRoutes);
 app.use("/api", protect, projectUserRoutes);
+app.use("/api", protect, taskRoutes);
 
 // Middleware error
 app.use(errorMiddleware);
