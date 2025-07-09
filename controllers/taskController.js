@@ -87,7 +87,6 @@ exports.getTaskDetail = async (req, res) => {
 };
 
 // Update Task
-
 exports.updateTask = async (req, res) => {
   try {
     const { task_id } = req.params;
