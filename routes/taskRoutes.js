@@ -10,8 +10,8 @@ const {
 
 router.post("/projects/:project_id/tasks", addTaskToProject);
 router.get("/projects/:project_id/tasks", getTasksByProject);
-router.put("/tasks/:task_id", getTaskDetail);
-router.put("/tasks/:task_id", updateTask);
+router.get("/tasks/:task_id", getTaskDetail);
+router.patch("/tasks/:task_id", updateTask);
 router.delete("/tasks/:task_id", deleteTask);
 
 module.exports = router;

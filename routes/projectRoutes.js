@@ -9,7 +9,7 @@ const {
 
 router.post("/projects", createProject);
 router.get("/projects/:project_id", getProjectDetail);
-router.post("/projects/:project_id", updateProject);
-router.post("/projects/:project_id", deleteProject);
+router.patch("/projects/:project_id", updateProject);
+router.delete("/projects/:project_id", deleteProject);
 
 module.exports = router;

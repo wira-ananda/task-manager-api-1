@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+const { updateUserProgress } = require("./userProjectProgressController");
 
 // Tambah task ke project
 exports.addTaskToProject = async (req, res) => {
@@ -86,21 +87,37 @@ exports.getTaskDetail = async (req, res) => {
 };
 
 // Update Task
+
 exports.updateTask = async (req, res) => {
   try {
     const { task_id } = req.params;
     const updates = req.body;
 
-    const updatedTask = await Task.findByIdAndUpdate(task_id, updates, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedTask) {
+    // Ambil task sebelum update
+    const oldTask = await Task.findById(task_id);
+    if (!oldTask) {
       return res.status(404).json({
         success: false,
         message: "Task tidak ditemukan",
       });
+    }
+
+    // Update task & populate user_id
+    const updatedTask = await Task.findByIdAndUpdate(task_id, updates, {
+      new: true,
+      runValidators: true,
+    }).populate("user_id", "username email");
+
+    // Jika status berubah, update progress user
+    if (
+      "status" in updates &&
+      oldTask.status !== updates.status &&
+      updatedTask.user_id
+    ) {
+      await updateUserProgress(
+        updatedTask.project_id,
+        updatedTask.user_id._id // ⬅️ harus ID murni
+      );
     }
 
     res.json({
