@@ -1,5 +1,6 @@
 const ProjectUser = require("../models/ProjectUser");
 const Project = require("../models/Project");
+const User = require("../models/User");
 
 // Tambah user baru
 exports.addUserToProject = async (req, res, next) => {
@@ -29,6 +30,24 @@ exports.getProjectsByUser = async (req, res, next) => {
     const projects = await Project.find({ _id: { $in: projectIds } });
 
     res.json(projects);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Ambil semua user dari project tertentu
+exports.getProjectUsers = async (req, res) => {
+  try {
+    const { project_id } = req.params;
+
+    const users = await ProjectUser.find({ project_id })
+      .populate("user_id", "username email") // tampilkan hanya username & email
+      .sort({ joined_at: 1 }); // opsional: urut berdasarkan waktu join
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
   } catch (err) {
     next(err);
   }
