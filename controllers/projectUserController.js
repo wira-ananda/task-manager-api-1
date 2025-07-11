@@ -5,14 +5,30 @@ const User = require("../models/User");
 // Tambah user baru
 exports.addUserToProject = async (req, res, next) => {
   try {
-    const { user_id, role } = req.body;
+    const { email, role } = req.body;
     const { project_id } = req.params;
+
+    // Cari user berdasarkan email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User dengan email tersebut tidak ditemukan.",
+      });
+    }
+
+    // Buat entri ProjectUser dengan user._id
     const newEntry = await ProjectUser.create({
-      project_id: project_id,
-      user_id,
+      project_id,
+      user_id: user._id,
       role,
     });
-    res.status(201).json(newEntry);
+
+    res.status(201).json({
+      success: true,
+      message: "User berhasil ditambahkan ke proyek.",
+      data: newEntry,
+    });
   } catch (err) {
     next(err);
   }
