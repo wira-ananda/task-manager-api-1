@@ -1,34 +1,20 @@
+// server.js
 const express = require("express");
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const connectDB = require("./config/db");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
-// Konfigurasi environment variable
-dotenv.config();
+dotenv.config(); // Load .env
+connectDB(); // Panggil koneksi database
 
-// Inisialisasi express app
 const app = express();
 
 // cors
 const cors = require("cors");
 app.use(cors());
-
-// Middleware untuk parsing JSON
 app.use(express.json());
 
-// Koneksi ke MongoDB
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => {
-    console.error("MongoDB connection error:", err.message);
-    process.exit(1);
-  });
-
-// Route Utama
+// Routes
 const protect = require("./middlewares/authMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -45,6 +31,6 @@ app.use("/api", protect, taskRoutes);
 // Middleware error
 app.use(errorMiddleware);
 
-// Jalankan server
+// Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server berjalan di port ${PORT}`));
