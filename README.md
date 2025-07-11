@@ -44,7 +44,7 @@ Saat user membuka aplikasi React:
 Semua alur yang terlihat di User Interface yang sudah dijelaskan diatas merupakan hasil dari komunikasi dua arah antara Front-End (React JS), Back-End (Node JS), dan Database (MongoDB)
 
 
-\- React menampilkan halaman → Data yang ada di halaman diminta ke Node JS, lalu Node JS bertugas mengambil data yang disimpan di MongoDB → Lalu MongoDB memberikan data sesuai dengan apa yang diminta oleh Node JS → Kemudian terakhir, Node JS pun memberikan data tersebut ke React JS → dan React JS menampilkannya ke halaman\\
+\- React menampilkan halaman → Data yang ada di halaman diminta ke Node JS, lalu Node JS bertugas mengambil data yang disimpan di MongoDB → Lalu MongoDB memberikan data sesuai dengan apa yang diminta oleh Node JS → Kemudian terakhir, Node JS pun memberikan data tersebut ke React JS → dan React JS menampilkannya ke halaman
 
 Proses tersebut lah yang akan dilakukan secara berulang-ulang dalam project ini.
 Dalam prosesnya pun React akan mengirim permintaan ke backend (`task-manager-api-1`) melalui endpoint seperti:
@@ -115,7 +115,3 @@ Task.find({ project_id: req.params.id })
 | Backend API           | Express.js + Node.js          |
 | Data Modeling         | MongoDB + Mongoose            |
 | Auth / Validasi Akses | JWT + Middleware Express      |
-
----
-
-Kalau kamu mau, aku juga bisa bantu buatkan diagram alir (flowchart) atau sequence diagram dari alur ini. Mau dilanjut?
