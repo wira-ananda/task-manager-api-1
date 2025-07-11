@@ -29,15 +29,13 @@ const seed = async () => {
     await Task.deleteMany();
     await ProjectUser.deleteMany();
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash("qazwsx", 10);
-
     // Buat User
-    const user1 = await User.create({
+    const user1 = new User({
       username: "user",
       email: "user@gmail.com",
-      password: hashedPassword,
+      password: "qazwsx", // pakai plain text
     });
+    await user1.save();
 
     // Buat Project
     const project1 = await Project.create({
